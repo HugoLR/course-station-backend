@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 //requerimos jwt
 const jwt = require('jsonwebtoken');
-
 //Requerimos el modelo
 const User = require('../../models/User');
-
-//Encuentra
+const Comment = require('../../models/Comment')
+const Course = require('../../models/Course')
+//Encuentra usuario
 const index = (req, res) => {
   User
       .find()
@@ -26,7 +26,7 @@ const index = (req, res) => {
       })
 }
 
-//Registrate
+//Registrate Usuario
 const signup = (request, response) => {
   User
     .find({email: request.body.email})
@@ -203,4 +203,62 @@ const updateBy = (request, response) => {
     });
 }
 
-module.exports = {index, signup, login, findBy, updateBy}
+const findCommentsByUser = (req, res) => {
+  User
+    .findById(req.params.userId)
+    .populate('comments')
+    .exec()
+    .then(user => {
+      res.json({
+        coincidences: user.comments.length,
+        data: user.comments
+      })
+      .status(200)
+    })
+    .catch(err => {
+      console.log(`Caught error: ${err}`)
+      return res.status(500).json(err)
+    })
+}
+
+const createComment = (req, res) => {
+  User
+    .findById(req.params.userId)
+    .exec()
+    .then(user => {
+      const newComment = new Comment({
+        _id: mongoose.Types.ObjectId(),
+        text: req.body.text,
+        ratings: req.body.ratings,
+        user: req.params.userId,
+        course: req.body.course
+      });
+      newComment
+        .save()
+        .then(commentCreated => {
+          const courseId = newComment.course
+      Course
+        .findById(courseId)
+        .exec()
+        .then(course => {
+          course.comments.push(commentCreated._id)
+          course.commentsText.push(commentCreated.text)
+          course.commentsRating.push(commentCreated.ratings)
+          course.save()
+        })
+          user.comments.push(commentCreated._id)
+          user.save();
+          res.json({
+            type:'Comment Created',
+            data:commentCreated
+          })
+          .status(200)
+        })
+        .catch(err => {
+          console.log(`Caught error:${err}`)
+          return res.satus(500).json(err)
+        })
+    })
+}
+
+module.exports = {index, signup, login, findBy, updateBy, createComment, findCommentsByUser}
