@@ -96,7 +96,8 @@ const login = (request, response) => {
             const token = jwt.sign({
               name: user[0].name,
               username: user[0].username,
-              email: user[0].email
+              email: user[0].email,
+              _id: user[0]._id
             }, process.env.JWT_SECRETKEY,{
               expiresIn:'1hr'
             });
