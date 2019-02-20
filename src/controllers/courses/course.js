@@ -84,6 +84,21 @@ const findCommentsByCourse = (req, res) => {
       console.log(`caugth err: ${err}`);
       return res.status(500).json(err)
     })
+
+  // Course
+  //   .findById(req.params.courseId)
+  //   .populate("user")
+  //   .exec()
+  //   .then(course => {
+  //     res.json({
+  //       data:course.use
+  //     })
+  //     .status(200)
+  //   })
+  //   .catch(err => {
+  //     console.log(`caugth err: ${err}`);
+  //     return rest.status(500).json(err)
+  //   })
 }
 
 const showCommentsForAllCourses = (req,res) => {

@@ -232,6 +232,7 @@ const createComment = (req, res) => {
         text: req.body.text,
         ratings: req.body.ratings,
         user: req.params.userId,
+        username:req.body.username,
         course: req.body.course
       });
       newComment

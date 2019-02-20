@@ -26,7 +26,6 @@ app.post('/auth/login', Users.login);
 // Course routes
 app.get('/courses', Courses.index);
 app.get('/courses/:courseId', Courses.findBy);
-app.get('/courses/:courseId/comments')
 app.get('/courses/:courseId/comments', Courses.findCommentsByCourse)
 app.get('/courses/comments', Courses.showCommentsForAllCourses)
 app.post('/courses', Courses.create);

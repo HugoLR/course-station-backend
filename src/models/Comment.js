@@ -12,6 +12,10 @@ const commentSchema = new Schema ({
     required: true
   },
   user: { type:Schema.Types.ObjectId, ref: 'User'},
+  username: {
+    type:String,
+    required: true
+  },
   course: { type:Schema.Types.ObjectId, ref: "Course"}
 })
 
