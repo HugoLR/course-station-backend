@@ -263,7 +263,34 @@ const createComment = (req, res) => {
     })
 }
 
+const updateComment = (req, res) => {
+
+  const text = req.body.text
+  const ratings = req.body.ratings
+  const user = req.body.user
+  const username = req.body.username
+  const course = req.body.course
+
+  Comment
+    .updateOne(
+      {_id:req.body.commentId},
+      {text: text, ratings:ratings}
+    )
+    .then(data => {
+      res.json({
+        type:"Update comment",
+        data: data
+      })
+      .status(200)
+    })
+    .catch(err => {
+      console.log(`Caught err : ${err}`);
+      return res.status(500).json(err)
+    })
+}
+
 const removeComment = (req, res) => {
+
   Comment
     .findById(req.body.commentId)
     .remove()
@@ -279,4 +306,4 @@ const removeComment = (req, res) => {
     })
 }
 
-module.exports = {index, signup, login, findBy, updateBy, createComment, findCommentsByUser, removeComment}
+module.exports = {index, signup, login, findBy, updateBy, createComment, findCommentsByUser, removeComment, updateComment}
