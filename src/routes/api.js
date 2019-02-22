@@ -16,6 +16,7 @@ app.get('/users/:userId', Users.findBy);
 app.put('/users/:userId', isAuthenticated,  Users.updateBy);
 app.get('/users/:userId/comments', Users.findCommentsByUser);
 app.post('/users/:userId/comments', Users.createComment);
+app.delete('/users/:userId/comments', Users.removeComment);
 // app.delete('/users/:userId', isAuthenticated, Users.removeBy);
 
 //Auth Routes

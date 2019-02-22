@@ -263,4 +263,20 @@ const createComment = (req, res) => {
     })
 }
 
-module.exports = {index, signup, login, findBy, updateBy, createComment, findCommentsByUser}
+const removeComment = (req, res) => {
+  Comment
+    .findById(req.body.commentId)
+    .remove()
+    .then(comment => {
+      res
+          .status(200)
+          .json({
+            message:'Comment was deleted'
+          })
+    })
+    .catch(err => {
+      console.log(`err: ${err}`)
+    })
+}
+
+module.exports = {index, signup, login, findBy, updateBy, createComment, findCommentsByUser, removeComment}
