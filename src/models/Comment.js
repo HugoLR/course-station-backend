@@ -16,6 +16,7 @@ const commentSchema = new Schema ({
     type:String,
     required: true
   },
+  date: {type: Date, default: Date.now},
   course: { type:Schema.Types.ObjectId, ref: "Course"}
 })
 
